@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 
+// NULLチェック
 if (!isset($_POST["dairy-title"]) || empty($_POST["dairy-title"])) {
     header("Location: /?error=1");
     die("Error: dairy-title is null or empty");
