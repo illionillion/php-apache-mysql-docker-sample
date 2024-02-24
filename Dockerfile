@@ -5,4 +5,4 @@ RUN apt-get update && apt-get install -y \
   && docker-php-ext-install pdo_mysql mysqli
 
 
-# COPY ./config/php/php.ini /usr/local/etc/php/
+COPY ./config/php/php.ini /usr/local/etc/php/

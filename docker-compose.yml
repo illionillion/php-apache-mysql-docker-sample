@@ -5,7 +5,6 @@ services:
     container_name: web
     volumes:
       - ./www/:/var/www/html
-      - ./config/php/:/usr/local/etc/php/
     privileged: true
     ports:
       - ${PHP_PORT}:80
