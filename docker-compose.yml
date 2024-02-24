@@ -24,6 +24,7 @@ services:
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=password # rootユーザーのパスワード
+      - TZ=Asia/Tokyo
     ports:
       - ${MYSQL_PORT}:3306
   phpmyadmin:
