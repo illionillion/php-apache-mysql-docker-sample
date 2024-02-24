@@ -5,12 +5,8 @@
 `.env`ファイルに以下を記述
 
 ```env
-MYSQL_HOST=mysql
-MYSQL_USER=root
-MYSQL_PORT=3306
-MYSQL_PASSWORD=password
 MYSQL_DATABASE=my_db
-TZ=Asia/Tokyo
+MYSQL_PORT=3306
 ADMIN_PORT=3307
 PHP_PORT=9090
 ```
