@@ -2,7 +2,7 @@
 
 function connect_db()
 {
-    $host = "db";
+    $host = getenv("MYSQL_HOST");
     $dbname = getenv('MYSQL_DATABASE'); // データベース名
     $username = getenv('MYSQL_USER'); // ユーザー名
     $password = getenv('MYSQL_PASSWORD'); // パスワード

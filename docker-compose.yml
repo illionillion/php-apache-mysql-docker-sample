@@ -11,6 +11,7 @@ services:
     depends_on:
       - db
     environment:
+      - MYSQL_HOST=db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=${MYSQL_DATABASE}
