@@ -6,3 +6,4 @@ RUN apt-get update && apt-get install -y \
 
 
 COPY ./config/php/php.ini /usr/local/etc/php/
+COPY ./config/apache2/apache2.conf /etc/apache2/

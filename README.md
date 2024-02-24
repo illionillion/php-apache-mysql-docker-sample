@@ -11,10 +11,10 @@ ADMIN_PORT=3307
 PHP_PORT=9090
 ```
 
-ターミナルを起動して以下を実行
+ターミナルを起動して以下を実行（初回は「`--build`もつける」）
 
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
 
 `http://localhost:9090`でWebサーバーにアクセス
