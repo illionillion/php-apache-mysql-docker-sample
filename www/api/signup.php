@@ -15,15 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // NULLチェック
 if (!isset($_POST["user-name"]) || empty($_POST["user-name"])) {
-    header("Location: /signin.php?error=1");
+    header("Location: /signup.php?error=1");
     die("Error: user-name is null or empty");
 }
 if (!isset($_POST["user-email"]) || empty($_POST["user-email"])) {
-    header("Location: /signin.php?error=2");
+    header("Location: /signup.php?error=2");
     die("Error: user-email is null or empty");
 }
 if (!isset($_POST["user-password"]) || empty($_POST["user-password"])) {
-    header("Location: /signin.php?error=3");
+    header("Location: /signup.php?error=3");
     die("Error: user-password is null or empty");
 }
 
@@ -47,7 +47,7 @@ try {
     header("Location: /");
 
 } catch (PDOException $e) {
-    header("Location: /signin.php?error=4");
+    header("Location: /signup.php?error=4");
     echo $e->getMessage();
     exit;
 } finally {
