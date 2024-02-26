@@ -9,7 +9,7 @@ try {
     $pdo = connect_db();
 
     // 日記を取得するクエリを準備
-    $diaryQuery = $pdo->prepare("SELECT * FROM diary");
+    $diaryQuery = $pdo->prepare("SELECT d.diary_id, d.diary_title, d.diary_content, d.user_id, d.created_at, u.user_name FROM diary d JOIN user u ON d.user_id = u.user_id");
 
     // クエリを実行
     $diaryQuery->execute();
@@ -67,9 +67,10 @@ try {
             <?php foreach ($diaries as $diary) : ?>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <?= $diary["diary_title"] ?>
-                        </h5>
+                        <div class="card-title">
+                            <h5><?= $diary["diary_title"] ?></h5>
+                            <p>作成者：<?= $diary["user_name"] ?></p>
+                        </div>
                         <pre class="card-text"><?= $diary["diary_content"] ?></pre>
                         <div id="carouselExample<?= $diary["diary_id"] ?>" class="carousel slide" style="height: 300px;">
                             <div class="carousel-inner h-100">
