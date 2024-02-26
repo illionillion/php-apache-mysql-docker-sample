@@ -1,12 +1,22 @@
 -- user_234201でログインする場合は、その前にrootでログインして権限を割り当てる必要がある
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 
+-- user
+CREATE TABLE user (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_name VARCHAR(255) UNIQUE KEY NOT NULL,
+    password LONGTEXT NOT NULL,
+    email VARCHAR(255) UNIQUE KEY NOT NULL
+);
+
 -- 日記テーブル
 CREATE TABLE diary (
     diary_id INT PRIMARY KEY AUTO_INCREMENT,
     diary_title VARCHAR(255) NOT NULL,
     diary_content TEXT NOT NULL,
-    created_at DATETIME DEFAULT NOW()
+    user_id INT NOT NULL,
+    created_at DATETIME DEFAULT NOW(),
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
 -- 日記画像テーブル
@@ -18,13 +28,6 @@ CREATE TABLE diary_image (
     FOREIGN KEY (diary_id) REFERENCES diary(diary_id)
 );
 
--- user
-CREATE TABLE user (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_name VARCHAR(255) NOT NULL,
-    password LONGTEXT NOT NULL,
-    email VARCHAR(255)
-);
 
 -- 初期データ（初回導入時はこれを実行してシステムにログインできるようにする）
 INSERT INTO user (user_name, password, email)
