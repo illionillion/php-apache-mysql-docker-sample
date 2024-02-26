@@ -42,7 +42,7 @@ try {
     $hashedPassword = hash('sha256', $userPassowrd);
 
     if ($existUser[0]["password"] == $hashedPassword) {
-        $_SESSION['user_id'] = $userName;
+        $_SESSION['user_id'] = $existUser[0]["user_id"];
         header("Location: /");
     } else {
         header("Location: /signin.php?error=4");
