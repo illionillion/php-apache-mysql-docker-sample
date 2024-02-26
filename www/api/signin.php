@@ -43,6 +43,7 @@ try {
 
     if ($existUser[0]["password"] == $hashedPassword) {
         $_SESSION['user_id'] = $existUser[0]["user_id"];
+        $_SESSION['user_name'] = $existUser[0]["user_name"];
         header("Location: /");
     } else {
         header("Location: /signin.php?error=4");

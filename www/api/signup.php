@@ -44,6 +44,7 @@ try {
 
     $userId = $pdo->lastInsertId();
     $_SESSION['user_id'] = $userId;
+    $_SESSION['user_name'] = $userName;
     header("Location: /");
 
 } catch (PDOException $e) {
