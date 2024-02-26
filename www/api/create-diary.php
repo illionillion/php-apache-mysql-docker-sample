@@ -28,15 +28,17 @@ if (!isset($_FILES["dairy-image"]) || empty($_FILES["dairy-image"])) {
 
 $dairyTitle = $_POST["dairy-title"];
 $dairyContent = $_POST["dairy-content"];
+$userId = $_SESSION["user_id"];
 $dairyImages = $_FILES["dairy-image"];
 
 try {
     $pdo = connect_db();
 
     // 日記を挿入
-    $stmt = $pdo->prepare("INSERT INTO diary (diary_title, diary_content) VALUES (:title, :content)");
+    $stmt = $pdo->prepare("INSERT INTO diary (diary_title, diary_content, user_id) VALUES (:title, :content, :user_id)");
     $stmt->bindParam(':title', $dairyTitle, PDO::PARAM_STR);
     $stmt->bindParam(':content', $dairyContent, PDO::PARAM_STR);
+    $stmt->bindParam(':user_id', $userId, PDO::PARAM_STR);
     $stmt->execute();
 
     // 直前に挿入された日記のIDを取得
