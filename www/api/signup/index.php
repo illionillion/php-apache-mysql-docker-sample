@@ -1,5 +1,6 @@
 <?php
-include "../lib/connect_db.php";
+
+include "../../lib/connect_db.php";
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -14,42 +15,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // NULLチェック
 if (!isset($_POST["user-name"]) || empty($_POST["user-name"])) {
-    header("Location: /signin.php?error=1");
+    header("Location: /signup?error=1");
     die("Error: user-name is null or empty");
 }
+if (!isset($_POST["user-email"]) || empty($_POST["user-email"])) {
+    header("Location: /signup?error=2");
+    die("Error: user-email is null or empty");
+}
 if (!isset($_POST["user-password"]) || empty($_POST["user-password"])) {
-    header("Location: /signin.php?error=2");
+    header("Location: /signup?error=3");
     die("Error: user-password is null or empty");
 }
 
 $userName = $_POST["user-name"];
 $userPassowrd = $_POST["user-password"];
+$hashedPassword = hash('sha256', $userPassowrd);
+$userEmail = $_POST["user-email"];
 
 try {
     $pdo = connect_db();
 
     // 日記を挿入
-    $stmt = $pdo->prepare("SELECT user_id, user_name, password, email FROM user WHERE user_name = :user_name");
+    $stmt = $pdo->prepare("INSERT INTO user (user_name, password, email) VALUES (:user_name, :password, :email)");
     $stmt->bindParam(':user_name', $userName, PDO::PARAM_STR);
+    $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $userEmail, PDO::PARAM_STR);
     $stmt->execute();
-    $existUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if (count($existUser) == 0) {
-        header("Location: /signin.php?error=3");
-        die("Error: " . $userName . "was not found.");
-    }
+    $userId = $pdo->lastInsertId();
+    $_SESSION['user_id'] = $userId;
+    $_SESSION['user_name'] = $userName;
+    header("Location: /");
 
-    $hashedPassword = hash('sha256', $userPassowrd);
-
-    if ($existUser[0]["password"] == $hashedPassword) {
-        $_SESSION['user_id'] = $existUser[0]["user_id"];
-        $_SESSION['user_name'] = $existUser[0]["user_name"];
-        header("Location: /");
-    } else {
-        header("Location: /signin.php?error=4");
-    }
 } catch (PDOException $e) {
-    header("Location: /signin.php?error=5");
+    header("Location: /signup?error=4");
     echo $e->getMessage();
     exit;
 } finally {

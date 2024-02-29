@@ -24,10 +24,10 @@ session_check();
         <h1 class="text-center py-3">日記作成アプリ</h1>
         <h5>ユーザー名：<?= $_SESSION["user_name"] ?></h5>
         <div class="d-flex gap-3">
-            <a href="/diary-list.php" class="link-secondary">日記一覧</a>
-            <a href="/api/signout.php" class="link-secondary">サインアウト</a>
+            <a href="/diary-list" class="link-secondary">日記一覧</a>
+            <a href="/api/signout" class="link-secondary">サインアウト</a>
         </div>
-        <form action="/api/create-diary.php" method="post" enctype="multipart/form-data" class="row gap-3">
+        <form action="/api/create-diary/index.php" method="post" enctype="multipart/form-data" class="row gap-3">
             <div class="w-100 form-label">
                 <label for="dairy-title" class="w-100 mb-1">タイトル</label>
                 <input type="text" name="dairy-title" id="dairy-title" class="form-control w-100" required

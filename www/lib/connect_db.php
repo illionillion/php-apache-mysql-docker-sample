@@ -25,5 +25,4 @@ function connect_db()
         die("データベース接続エラー: " . $e->getMessage());
         // return NULL;
     }
-
 }

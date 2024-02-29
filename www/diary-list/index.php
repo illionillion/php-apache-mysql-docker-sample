@@ -1,6 +1,6 @@
 <?php
-include "./lib/connect_db.php";
-include "./lib/session_check.php";
+include "../lib/connect_db.php";
+include "../lib/session_check.php";
 
 session_check();
 
@@ -62,7 +62,7 @@ try {
         <h5>ユーザー名：<?= $_SESSION["user_name"] ?></h5>
         <div class="d-flex gap-3">
             <a href="/" class="link-secondary">日記作成</a>
-            <a href="/api/signout.php" class="link-secondary">サインアウト</a>
+            <a href="/api/signout" class="link-secondary">サインアウト</a>
         </div>
         <div class="row gap-2">
             <?php foreach ($diaries as $diary) : ?>

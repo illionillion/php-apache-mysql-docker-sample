@@ -1,6 +1,6 @@
 <?php
-include "../lib/connect_db.php";
-include "../lib/session_check.php";
+include "../../lib/connect_db.php";
+include "../../lib/session_check.php";
 
 session_check();
 
