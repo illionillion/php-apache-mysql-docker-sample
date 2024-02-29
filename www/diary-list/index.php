@@ -16,19 +16,6 @@ try {
 
     // 日記の結果セットを取得
     $diaries = $diaryQuery->fetchAll(PDO::FETCH_ASSOC);
-
-    // 各日記に関連する画像を取得するループ
-    foreach ($diaries as $diary) {
-        // 日記に関連する画像を取得するクエリを準備
-        $imageQuery = $pdo->prepare("SELECT diary_image_data FROM diary_image WHERE diary_id = :diary_id");
-        $imageQuery->bindParam(':diary_id', $diary['diary_id']);
-
-        // クエリを実行
-        $imageQuery->execute();
-
-        // 画像の結果セットを取得
-        $images = $imageQuery->fetchAll(PDO::FETCH_ASSOC);
-    }
 } catch (PDOException $e) {
     // エラーハンドリング
     echo "Error: " . $e->getMessage();
@@ -75,11 +62,30 @@ try {
                         <pre class="card-text"><?= $diary["diary_content"] ?></pre>
                         <div id="carouselExample<?= $diary["diary_id"] ?>" class="carousel slide" style="height: 300px;">
                             <div class="carousel-inner h-100">
-                                <?php foreach ($images as $i => $image) : ?>
-                                    <div class="carousel-item h-100 <?= $i == 0 ? "active" : "" ?>">
-                                        <img class="d-block img-thumbnail w-100 h-100" style="object-fit: contain;" src="data:image/jpeg;base64,<?= base64_encode($image['diary_image_data']) ?>" />
-                                    </div>
-                                <?php endforeach; ?>
+                                <?php
+                                try {
+                                    // 各日記に関連する画像を取得するループ
+                                    $pdo = connect_db();
+                                    $imageQuery = $pdo->prepare("SELECT diary_image_data FROM diary_image WHERE diary_id = :diary_id");
+                                    $imageQuery->bindParam(':diary_id', $diary['diary_id']);
+
+                                    // クエリを実行
+                                    $imageQuery->execute();
+
+                                    // 画像の結果セットを取得
+                                    $images = $imageQuery->fetchAll(PDO::FETCH_ASSOC);
+                                } catch (PDOException $e) {
+                                    echo "Error: " . $e->getMessage();
+                                }
+
+                                ?>
+                                <?php if (isset($images) && !empty($images)) : ?>
+                                    <?php foreach ($images as $i => $image) : ?>
+                                        <div class="carousel-item h-100 <?= $i == 0 ? "active" : "" ?>">
+                                            <img class="d-block img-thumbnail w-100 h-100" style="object-fit: contain;" src="data:image/jpeg;base64,<?= base64_encode($image['diary_image_data']) ?>" />
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<?= $diary["diary_id"] ?>" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon bg-primary rounded" aria-hidden="true"></span>
