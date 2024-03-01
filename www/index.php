@@ -35,7 +35,7 @@ session_check();
             </div>
             <div class="w-100 form-label">
                 <label for="dairy-image" class="w-100 mb-1">画像</label>
-                <input type="file" name="dairy-image[]" accept="image/*" id="dairy-image" class="form-control w-100"
+                <input type="file" name="dairy-image[]" accept="image/png, image/jpeg" id="dairy-image" class="form-control w-100"
                     multiple required placeholder="画像を選択">
             </div>
             <div class="w-100 form-label">
