@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libpng-dev \
     libjpeg-dev \
+  && docker-php-ext-configure gd --with-jpeg \
   && docker-php-ext-install pdo_mysql mysqli gd
 
 # php.iniとApacheの設定ファイルのコピー
