@@ -1,6 +1,7 @@
 <?php
 include "../../lib/connect_db.php";
 include "../../lib/session_check.php";
+include "../../lib/resize_and_compress_image.php";
 
 session_check();
 
@@ -48,23 +49,23 @@ try {
         // 画像を1つずつ処理
         foreach ($dairyImages["tmp_name"] as $index => $tmpName) {
             $imageData = file_get_contents($tmpName);
-
+            $resizedImage = resize_and_compress_image($imageData, 800, 600); 
             // 画像を挿入
             $stmt = $pdo->prepare("INSERT INTO diary_image (diary_id, diary_image_data) VALUES (:diary_id, :image_data)");
             $stmt->bindParam(':diary_id', $diaryId, PDO::PARAM_INT);
-            $stmt->bindParam(':image_data', $imageData, PDO::PARAM_LOB);
+            $stmt->bindParam(':image_data', $resizedImage, PDO::PARAM_LOB);
             $stmt->execute();
         }
     } else {
         $tmpName = $dairyImages["tmp_name"];
         $imageData = file_get_contents($tmpName);
+        $resizedImage = resize_and_compress_image($imageData, 800, 600); 
         // 画像を挿入
         $stmt = $pdo->prepare("INSERT INTO diary_image (diary_id, diary_image_data) VALUES (:diary_id, :image_data)");
         $stmt->bindParam(':diary_id', $diaryId, PDO::PARAM_INT);
-        $stmt->bindParam(':image_data', $imageData, PDO::PARAM_LOB);
+        $stmt->bindParam(':image_data', $resizedImage, PDO::PARAM_LOB);
         $stmt->execute();
     }
-
 
     // 成功した場合、リダイレクト
     header("Location: /?success");
