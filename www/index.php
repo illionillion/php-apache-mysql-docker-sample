@@ -22,7 +22,7 @@ session_check();
 <body>
     <main class="container row m-auto">
         <h1 class="text-center py-3">日記作成アプリ</h1>
-        <h5>ユーザー名：<?= $_SESSION["user_name"] ?></h5>
+        <h5>ユーザー名：<?= htmlspecialchars($_SESSION["user_name"]) ?></h5>
         <div class="d-flex gap-3">
             <a href="/diary-list" class="link-secondary">日記一覧</a>
             <a href="/api/signout" class="link-secondary">サインアウト</a>

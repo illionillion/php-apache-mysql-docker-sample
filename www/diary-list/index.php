@@ -46,7 +46,7 @@ try {
 <body>
     <main class="container row m-auto">
         <h1 class="text-center py-3">日記一覧</h1>
-        <h5>ユーザー名：<?= $_SESSION["user_name"] ?></h5>
+        <h5>ユーザー名：<?= htmlspecialchars($_SESSION["user_name"]) ?></h5>
         <div class="d-flex gap-3">
             <a href="/" class="link-secondary">日記作成</a>
             <a href="/api/signout" class="link-secondary">サインアウト</a>
@@ -56,10 +56,10 @@ try {
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h5><?= $diary["diary_title"] ?></h5>
-                            <p>作成者：<?= $diary["user_name"] ?></p>
+                            <h5><?= htmlspecialchars($diary["diary_title"]) ?></h5>
+                            <p>作成者：<?= htmlspecialchars($diary["user_name"]) ?></p>
                         </div>
-                        <pre class="card-text"><?= $diary["diary_content"] ?></pre>
+                        <pre class="card-text"><?= htmlspecialchars($diary["diary_content"]) ?></pre>
                         <div id="carouselExample<?= $diary["diary_id"] ?>" class="carousel slide" style="height: 300px;">
                             <div class="carousel-inner h-100">
                                 <?php
